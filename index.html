@@ -782,12 +782,21 @@ function setFileMeta(name){
 
 async function loadJSZip(){
   if (window.JSZip) return window.JSZip;
+  const sources = [
+    'https://fastly.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js',
+    'https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js'
+  ];
   return new Promise((resolve, reject) => {
-    const s = document.createElement('script');
-    s.src = 'https://fastly.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js';
-    s.onload = () => resolve(window.JSZip);
-    s.onerror = () => reject(new Error('解析组件加载失败，请检查网络后重试'));
-    document.head.appendChild(s);
+    let i = 0;
+    const next = () => {
+      if (i >= sources.length) { reject(new Error('解析组件加载失败，请检查网络后重试')); return; }
+      const s = document.createElement('script');
+      s.src = sources[i++];
+      s.onload = () => resolve(window.JSZip);
+      s.onerror = () => { s.remove(); next(); };
+      document.head.appendChild(s);
+    };
+    next();
   });
 }
 
