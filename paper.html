@@ -30,7 +30,7 @@ body{
   margin:0;background:var(--paper);color:var(--ink);
   font-family:"Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif;
   font-size:16px;line-height:1.75;letter-spacing:.005em;
-  -webkit-font-smoothing:antialiased;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;
 }
 body::before{
   content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;
@@ -79,6 +79,13 @@ button:disabled{cursor:not-allowed;opacity:.55}
   transition:background .2s,transform .2s;
 }
 .head-cta:hover{background:var(--accent-dark);transform:translateY(-1px)}
+.topbar{background:var(--ink);color:rgba(248,245,238,.72);font-size:9px;letter-spacing:.04em}
+.topbar-row{min-height:34px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.topbar-promo{display:inline-flex;align-items:center;gap:7px;white-space:nowrap}
+.topbar-promo i{width:5px;height:5px;border-radius:50%;background:#d98a75;display:inline-block}
+.topbar-links{display:flex;align-items:center;gap:18px;white-space:nowrap}
+.topbar-links a{color:rgba(248,245,238,.65);text-decoration:none;transition:.2s}
+.topbar-links a:hover{color:#fff}
 .paper-switch{border-top:1px solid rgba(217,210,195,.55);background:rgba(248,245,238,.55)}
 .paper-switch-row{display:flex;gap:8px;padding:9px 0;overflow-x:auto;scrollbar-width:none}
 .paper-switch-row::-webkit-scrollbar{display:none}
@@ -371,6 +378,9 @@ details p{font-size:12px;color:var(--muted);line-height:1.85;margin:10px 0 0;max
   .head-row{height:64px;gap:12px}
   .nav{display:none}
   .head-cta{padding:9px 14px;font-size:11px}
+  .topbar-row{justify-content:center;min-height:30px}
+  .topbar-links{display:none}
+  .topbar-promo{font-size:8px;white-space:normal;text-align:center;line-height:1.6}
   .brand-name strong{font-size:16px}
   .brand-mark{width:34px;height:34px;font-size:18px}
   .hero{padding:42px 0 34px}
@@ -409,6 +419,14 @@ details p{font-size:12px;color:var(--muted);line-height:1.85;margin:10px 0 0;max
 </head>
 <body>
 
+<div class="topbar">
+  <div class="wrap topbar-row">
+    <span class="topbar-promo"><i></i>开业价 · 论文降重 ¥2.9/千字起 · 学生凭证 9 折</span>
+    <div class="topbar-links"><a href="report.html">报告示例</a><a href="pricing.html">价格</a><a href="faq.html">常见问题</a><a href="about.html">关于</a></div>
+  </div>
+</div>
+
+
 <header class="site-head">
   <div class="wrap head-row">
     <a class="brand" href="index.html" aria-label="巧巧论文工坊首页">
@@ -429,7 +447,7 @@ details p{font-size:12px;color:var(--muted);line-height:1.85;margin:10px 0 0;max
       <a href="paper.html" class="active">01 论文降重</a>
       <a href="ppt.html">02 PPT 制作</a>
       <a href="word.html">03 Word 排版</a>
-      <a href="excel.html">04 Excel 表格</a>
+      <a href="excel.html">04 Excel 表格</a><a href="report.html">查重报告示例 ↗</a>
     </div>
   </div>
 </header>
@@ -694,6 +712,10 @@ details p{font-size:12px;color:var(--muted);line-height:1.85;margin:10px 0 0;max
         <a href="ppt.html">PPT 制作</a>
         <a href="word.html">Word 排版</a>
         <a href="excel.html">Excel 表格</a>
+        <a href="report.html">报告示例</a>
+        <a href="pricing.html">完整价格</a>
+        <a href="faq.html">常见问题</a>
+        <a href="about.html">关于我们</a>
       </div>
       <div class="foot-col">
         <h4>联系</h4>

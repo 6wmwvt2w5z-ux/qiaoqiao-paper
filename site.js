@@ -111,6 +111,19 @@
     paint(0);
   });
 
+  // Report tabs
+  document.querySelectorAll('[data-tabs]').forEach((root) => {
+    const buttons = Array.from(root.querySelectorAll('[data-tab]'));
+    const panels = Array.from(root.querySelectorAll('[data-panel]'));
+    if (!buttons.length || !panels.length) return;
+    function show(name) {
+      buttons.forEach((b) => b.classList.toggle('is-active', b.dataset.tab === name));
+      panels.forEach((p) => p.classList.toggle('is-active', p.dataset.panel === name));
+    }
+    buttons.forEach((b) => b.addEventListener('click', () => show(b.dataset.tab)));
+    show(buttons[0].dataset.tab);
+  });
+
   // Quote widgets
   document.querySelectorAll('.quote-widget').forEach((w) => {
     const service = w.dataset.service || '论文服务';
