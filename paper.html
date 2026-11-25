@@ -1,0 +1,1363 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>论文降重与原创性优化 — 巧巧论文工坊</title>
+<meta name="description" content="巧巧论文工坊：面向大学生的论文原创性优化服务。上传论文或段落，先看参考重复度，再由 AI 初改、人工复核。按字数透明计价，不代写、不承诺包过。">
+<meta name="theme-color" content="#f8f5ee">
+<link rel="preconnect" href="https://miaoda.feishu.cn">
+<link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Serif+SC:wght@400;500;600;700;900&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap">
+<style>
+:root{
+  --paper:#f8f5ee;
+  --paper-2:#f2ede2;
+  --card:#fffdf8;
+  --ink:#1c2320;
+  --muted:#72776e;
+  --line:#d9d2c3;
+  --line-soft:#e8e1d4;
+  --accent:#c64932;
+  --accent-dark:#993523;
+  --sage:#4d6857;
+  --gold:#b28a4e;
+  --shadow:0 18px 50px rgba(40,33,24,.09);
+  --radius:18px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--paper);color:var(--ink);
+  font-family:"Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif;
+  font-size:16px;line-height:1.75;letter-spacing:.005em;
+  -webkit-font-smoothing:antialiased;
+}
+body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;
+  background:
+    radial-gradient(1200px 600px at 8% -10%,rgba(198,73,50,.055),transparent 60%),
+    radial-gradient(900px 500px at 100% 10%,rgba(77,104,87,.06),transparent 55%);
+}
+a{color:inherit}
+img{max-width:100%;display:block}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+button:disabled{cursor:not-allowed;opacity:.55}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.wrap{max-width:1180px;margin:0 auto;padding:0 28px}
+.serif{font-family:"Noto Serif SC","Songti SC","STSong",serif}
+.kicker{
+  margin:0 0 12px;font-size:11px;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--muted);font-weight:600;
+}
+.section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:28px;margin-bottom:34px}
+.section-head h2{font-family:"Noto Serif SC","Songti SC",serif;font-size:34px;line-height:1.25;margin:0;letter-spacing:-.02em}
+.section-head p{max-width:420px;margin:0;color:var(--muted);font-size:14px;line-height:1.8}
+.hair{height:1px;background:var(--line);border:0;margin:0}
+
+/* Header */
+.site-head{
+  position:sticky;top:0;z-index:30;background:rgba(248,245,238,.9);
+  backdrop-filter:blur(14px);border-bottom:1px solid var(--line);
+}
+.head-row{height:72px;display:flex;align-items:center;gap:28px}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none;flex:0 0 auto}
+.brand-mark{
+  width:38px;height:38px;background:var(--ink);color:#f8f5ee;display:grid;place-items:center;
+  font-family:"Noto Serif SC","Songti SC",serif;font-size:19px;font-weight:600;
+  border-radius:50%;box-shadow:none;
+}
+.brand-name{display:flex;flex-direction:column;line-height:1.05}
+.brand-name strong{font-family:"Noto Serif SC","Songti SC",serif;font-size:18px;letter-spacing:.04em}
+.brand-name small{font-size:9px;letter-spacing:.2em;color:var(--muted);margin-top:4px}
+.nav{display:flex;align-items:center;gap:24px;margin-left:auto;font-size:13px;color:#4e554d}
+.nav a{text-decoration:none;padding:4px 0;border-bottom:1px solid transparent;transition:border-color .2s,color .2s}
+.nav a:hover{color:var(--accent-dark);border-bottom-color:var(--accent-dark)}
+.head-cta{
+  text-decoration:none;background:var(--ink);color:#fff;border-radius:999px;
+  padding:10px 18px;font-size:12px;letter-spacing:.08em;white-space:nowrap;
+  transition:background .2s,transform .2s;
+}
+.head-cta:hover{background:var(--accent-dark);transform:translateY(-1px)}
+.paper-switch{border-top:1px solid rgba(217,210,195,.55);background:rgba(248,245,238,.55)}
+.paper-switch-row{display:flex;gap:8px;padding:9px 0;overflow-x:auto;scrollbar-width:none}
+.paper-switch-row::-webkit-scrollbar{display:none}
+.paper-switch-row a{flex:0 0 auto;font-size:10px;padding:5px 11px;border:1px solid var(--line);border-radius:999px;color:var(--muted);background:rgba(255,253,248,.65);text-decoration:none}
+.paper-switch-row a:hover,.paper-switch-row a.active{border-color:var(--accent);color:var(--accent);background:#fff}
+
+/* Hero */
+.hero{padding:64px 0 46px;border-bottom:1px solid var(--line)}
+.hero-grid{display:grid;grid-template-columns:1.08fr .92fr;gap:56px;align-items:center}
+.hero-copy .eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:22px;font-size:12px;color:var(--muted);letter-spacing:.08em}
+.eyebrow .dot{width:7px;height:7px;border-radius:50%;background:var(--accent);display:inline-block}
+.hero h1{
+  font-family:"Noto Serif SC","Songti SC",serif;font-size:62px;line-height:1.08;
+  letter-spacing:-.055em;margin:0 0 24px;font-weight:700;
+}
+.hero h1 em{font-style:normal;color:var(--accent);position:relative;white-space:nowrap}
+.hero h1 em::after{
+  content:"";position:absolute;left:0;right:0;bottom:4px;height:8px;
+  background:rgba(198,73,50,.16);z-index:-1;transform:rotate(-.5deg);
+}
+.hero-sub{max-width:560px;margin:0 0 26px;font-size:17px;line-height:1.85;color:#596057}
+.hero-sub strong{color:var(--ink);font-weight:600}
+.hero-actions{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-bottom:26px}
+.btn{
+  border:0;border-radius:999px;padding:13px 22px;font-size:13px;letter-spacing:.04em;
+  transition:transform .2s,background .2s,box-shadow .2s;display:inline-flex;align-items:center;gap:8px;
+}
+.btn-primary{background:var(--accent);color:#fff;box-shadow:0 8px 20px rgba(198,73,50,.22)}
+.btn-primary:hover{background:var(--accent-dark);transform:translateY(-2px);box-shadow:0 10px 24px rgba(198,73,50,.28)}
+.btn-ghost{background:transparent;color:var(--ink);border:1px solid var(--line);padding:12px 20px}
+.btn-ghost:hover{border-color:var(--ink);transform:translateY(-1px)}
+.btn-dark{background:var(--ink);color:#fff}
+.btn-dark:hover{background:#000;transform:translateY(-1px)}
+.hero-points{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:12px;color:var(--muted)}
+.hero-points span{display:inline-flex;align-items:center;gap:7px}
+.hero-points i{width:5px;height:5px;border-radius:50%;background:var(--sage);display:inline-block}
+
+.upload-card{
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  padding:24px 24px 20px;box-shadow:var(--shadow);position:relative;
+  transform:rotate(.6deg);
+}
+.upload-card::before{
+  content:"";position:absolute;top:-7px;right:22px;width:52px;height:18px;
+  background:rgba(178,138,78,.22);transform:rotate(4deg);border:1px solid rgba(178,138,78,.25);
+}
+.card-top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:16px}
+.card-top .tag{font-size:10px;letter-spacing:.16em;color:var(--muted)}
+.mini-seal{
+  width:28px;height:28px;border:1px solid rgba(198,73,50,.35);color:var(--accent);
+  display:grid;place-items:center;font-family:"Noto Serif SC",serif;font-size:13px;
+  transform:rotate(-6deg);
+}
+.upload-card h2{font-family:"Noto Serif SC","Songti SC",serif;font-size:23px;line-height:1.35;margin:0 0 6px}
+.upload-card .hint{font-size:12px;color:var(--muted);margin:0 0 18px;line-height:1.7}
+.dropzone{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;
+  min-height:150px;border:1px dashed #bfb6a4;border-radius:14px;background:rgba(248,245,238,.6);
+  padding:18px;transition:border-color .2s,background .2s,transform .2s;cursor:pointer;
+}
+.dropzone:hover,.dropzone.drag{border-color:var(--accent);background:rgba(198,73,50,.055);transform:translateY(-1px)}
+.drop-icon{
+  width:44px;height:50px;border:1px solid var(--line);background:#fff;border-radius:3px;
+  position:relative;margin-bottom:10px;box-shadow:4px 4px 0 rgba(28,35,32,.06);
+}
+.drop-icon::before{content:"";position:absolute;top:10px;left:10px;right:10px;height:1px;background:var(--line-soft);box-shadow:0 7px 0 var(--line-soft),0 14px 0 var(--line-soft)}
+.drop-icon::after{
+  content:"+";position:absolute;right:-9px;bottom:-9px;width:22px;height:22px;border-radius:50%;
+  background:var(--accent);color:#fff;font-size:16px;line-height:21px;text-align:center;
+}
+.dropzone strong{font-size:14px;font-weight:600}
+.dropzone small{display:block;margin-top:5px;font-size:11px;color:var(--muted);line-height:1.6}
+.file-meta{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:14px;font-size:11px;color:var(--muted);min-height:18px}
+.file-meta b{font-weight:500;color:var(--ink);max-width:68%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.file-meta a{color:var(--accent-dark);text-decoration:none;border-bottom:1px solid rgba(198,73,50,.3)}
+.card-note{
+  display:flex;align-items:flex-start;gap:8px;margin-top:14px;padding-top:12px;border-top:1px solid var(--line-soft);
+  font-size:11px;color:var(--muted);line-height:1.65;
+}
+.card-note b{color:var(--ink);font-weight:600}
+.card-note .lock{color:var(--sage);font-size:13px;line-height:1.3}
+
+/* Trust strip */
+.trust-strip{border-bottom:1px solid var(--line);background:var(--paper-2)}
+.trust-row{display:grid;grid-template-columns:repeat(4,1fr);gap:0}
+.trust-item{padding:20px 18px;border-right:1px solid var(--line);display:flex;flex-direction:column;gap:3px}
+.trust-item:last-child{border-right:0}
+.trust-item strong{font-family:"Noto Serif SC",serif;font-size:15px;letter-spacing:.03em}
+.trust-item span{font-size:11px;color:var(--muted)}
+.trust-item .num{font-size:10px;color:var(--accent);letter-spacing:.14em;margin-bottom:2px}
+
+/* Services */
+.section{padding:78px 0}
+.services{background:var(--paper)}
+.service-grid{display:grid;grid-template-columns:1.3fr .85fr .85fr;gap:18px}
+.service-card{
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  padding:26px;display:flex;flex-direction:column;min-height:270px;position:relative;overflow:hidden;
+  transition:transform .25s,box-shadow .25s,border-color .25s;
+}
+.service-card:hover{transform:translateY(-4px);box-shadow:var(--shadow);border-color:#c9bfae}
+.service-card.main{background:var(--ink);color:#f8f5ee;border-color:var(--ink)}
+.service-card.main::after{
+  content:"巧";position:absolute;right:-8px;bottom:-26px;font-family:"Noto Serif SC",serif;
+  font-size:150px;line-height:1;color:rgba(248,245,238,.055);pointer-events:none;
+}
+.service-card .num{font-size:10px;letter-spacing:.18em;color:var(--accent);margin-bottom:22px}
+.service-card.main .num{color:#d98a75}
+.service-card h3{font-family:"Noto Serif SC",serif;font-size:26px;line-height:1.35;margin:0 0 10px;letter-spacing:-.02em}
+.service-card p{font-size:13px;line-height:1.8;color:var(--muted);margin:0 0 18px}
+.service-card.main p{color:rgba(248,245,238,.7)}
+.service-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto;margin-bottom:16px}
+.service-tags span{font-size:10px;padding:4px 8px;border:1px solid var(--line);border-radius:999px;color:var(--muted)}
+.service-card.main .service-tags span{border-color:rgba(248,245,238,.2);color:rgba(248,245,238,.75)}
+.service-link{display:inline-flex;align-items:center;gap:4px;font-size:11px;color:var(--accent);text-decoration:none;font-weight:600;margin:0 0 16px}
+.service-link:hover{color:#8c251d}
+.service-links{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px}
+.service-links a{display:inline-flex;align-items:center;gap:4px;padding:6px 10px;border:1px solid var(--line);border-radius:999px;font-size:10px;color:var(--ink);text-decoration:none;background:#fff}
+.service-links a:hover{border-color:var(--accent);color:var(--accent)}
+.service-price{display:flex;align-items:baseline;justify-content:space-between;gap:8px;border-top:1px solid var(--line-soft);padding-top:14px}
+.service-card.main .service-price{border-top-color:rgba(248,245,238,.16)}
+.service-price b{font-family:"Noto Serif SC",serif;font-size:20px;color:var(--accent)}
+.service-card.main .service-price b{color:#f0b6a6}
+.service-price span{font-size:11px;color:var(--muted)}
+.service-card.main .service-price span{color:rgba(248,245,238,.55)}
+
+/* Pricing */
+.pricing{background:var(--paper-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.pricing-grid{display:grid;grid-template-columns:1.12fr .88fr;gap:28px;align-items:start}
+.price-table{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+.price-table table{width:100%;border-collapse:collapse}
+.price-table th,.price-table td{padding:16px 18px;text-align:left;border-bottom:1px solid var(--line-soft);vertical-align:top}
+.price-table th{font-size:10px;letter-spacing:.16em;color:var(--muted);font-weight:600;background:rgba(242,237,226,.5)}
+.price-table td:first-child{font-weight:600;font-size:14px}
+.price-table td:nth-child(2){white-space:nowrap;color:var(--accent);font-family:"Noto Serif SC",serif;font-size:17px;font-weight:600}
+.price-table td:last-child{font-size:11px;color:var(--muted);line-height:1.65}
+.price-table tr:last-child td{border-bottom:0}
+.price-note{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:14px;font-size:11px;color:var(--muted)}
+.price-note span{display:inline-flex;align-items:center;gap:6px}
+.price-note i{width:5px;height:5px;background:var(--gold);border-radius:50%}
+.pay-box{
+  display:flex;align-items:center;gap:22px;margin-top:22px;padding:18px 22px;
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+}
+.pay-head{flex:0 0 auto;display:flex;flex-direction:column;gap:4px;padding-right:22px;border-right:1px solid var(--line-soft)}
+.pay-head span{font-size:10px;letter-spacing:.16em;color:var(--accent);font-weight:600}
+.pay-head strong{font-family:"Noto Serif SC",serif;font-size:19px;letter-spacing:.02em}
+.pay-box p{margin:0;font-size:12px;line-height:1.85;color:var(--muted)}
+.pay-box b{color:var(--ink);font-weight:600}
+
+.quote-card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:26px;box-shadow:var(--shadow)}
+.quote-card h3{font-family:"Noto Serif SC",serif;font-size:22px;margin:0 0 6px;letter-spacing:-.02em}
+.quote-card p{font-size:12px;color:var(--muted);margin:0 0 18px;line-height:1.7}
+.field{margin-bottom:14px}
+.field label{display:block;font-size:11px;color:var(--muted);margin-bottom:6px;letter-spacing:.04em}
+.field select,.field input{
+  width:100%;border:1px solid var(--line);background:#fff;border-radius:10px;padding:11px 12px;
+  font-size:13px;color:var(--ink);appearance:none;
+}
+.field select:focus,.field input:focus{border-color:var(--accent);outline:0;box-shadow:0 0 0 3px rgba(198,73,50,.1)}
+.quote-result{display:flex;align-items:flex-end;justify-content:space-between;gap:10px;border-top:1px solid var(--line-soft);margin-top:18px;padding-top:18px}
+.quote-result small{font-size:11px;color:var(--muted);line-height:1.6}
+.quote-result b{font-family:"Noto Serif SC",serif;font-size:30px;line-height:1;color:var(--accent);white-space:nowrap}
+.quote-card .btn{width:100%;justify-content:center;margin-top:16px}
+.quote-card .mini{font-size:10px;color:var(--muted);text-align:center;margin-top:10px;line-height:1.6}
+
+/* Workspace */
+.workspace{background:var(--paper)}
+.work-grid{display:grid;grid-template-columns:1.02fr .98fr;gap:20px;align-items:start}
+.editor-card,.result-card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius)}
+.editor-head,.result-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:18px 20px;border-bottom:1px solid var(--line-soft)}
+.editor-head strong,.result-head strong{font-family:"Noto Serif SC",serif;font-size:16px;letter-spacing:.02em}
+.editor-head span,.result-head span{font-size:10px;color:var(--muted);letter-spacing:.08em}
+.editor-body{padding:18px 20px 20px}
+#textInput{
+  width:100%;min-height:330px;resize:vertical;border:1px solid var(--line);border-radius:12px;
+  background:#fff;padding:16px;font-size:14px;line-height:1.9;color:var(--ink);
+}
+#textInput::placeholder{color:#a5a99f}
+.editor-foot{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:12px;flex-wrap:wrap}
+.char-count{font-size:11px;color:var(--muted)}
+.char-count b{font-family:"Noto Serif SC",serif;font-size:17px;color:var(--ink);font-weight:600}
+.editor-actions{display:flex;gap:8px;flex-wrap:wrap}
+.editor-actions .btn{padding:10px 16px;font-size:12px}
+.notice{
+  margin-top:12px;padding:10px 12px;border-radius:10px;background:rgba(77,104,87,.08);
+  color:#41584a;font-size:11px;line-height:1.7;
+}
+.notice.warn{background:rgba(198,73,50,.08);color:#8d493a}
+
+.result-card{min-height:100%;display:flex;flex-direction:column;overflow:hidden}
+.result-body{padding:20px;flex:1;display:flex;flex-direction:column}
+.result-empty{
+  flex:1;min-height:390px;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;color:var(--muted);padding:30px;
+}
+.result-empty .empty-num{font-family:"Noto Serif SC",serif;font-size:72px;line-height:1;color:rgba(198,73,50,.18);margin-bottom:18px}
+.result-empty strong{font-family:"Noto Serif SC",serif;font-size:20px;color:var(--ink);margin-bottom:7px}
+.result-empty p{max-width:300px;font-size:12px;line-height:1.8;margin:0}
+.score-box{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;padding-bottom:14px;border-bottom:1px solid var(--line-soft)}
+.score-value{font-family:"Noto Serif SC",serif;font-size:46px;line-height:1;color:var(--accent);letter-spacing:-.03em}
+.score-value small{font-size:15px;color:var(--muted);margin-left:2px}
+.score-meta{text-align:right;font-size:10px;color:var(--muted);line-height:1.7}
+.score-meta b{display:block;color:var(--ink);font-size:12px;font-weight:500}
+.bar{height:8px;border-radius:999px;background:var(--line-soft);overflow:hidden;margin:14px 0 8px}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--sage),var(--accent));border-radius:999px;transition:width .7s ease}
+.score-caption{font-size:10px;color:var(--muted);line-height:1.65;margin-bottom:16px}
+.risk-title{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:11px;letter-spacing:.08em;color:var(--muted);margin:4px 0 10px}
+.risk-title b{color:var(--ink);font-weight:500}
+.risk-list{display:flex;flex-direction:column;gap:8px;max-height:260px;overflow:auto;padding-right:2px}
+.risk-item{border:1px solid var(--line-soft);border-radius:12px;padding:11px 12px;background:rgba(248,245,238,.45)}
+.risk-item .risk-top{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:4px}
+.risk-item .risk-label{font-size:10px;color:var(--muted);letter-spacing:.08em}
+.risk-item .risk-value{font-size:10px;color:var(--accent-dark);background:rgba(198,73,50,.08);padding:2px 7px;border-radius:999px}
+.risk-item p{margin:0;font-size:11px;line-height:1.7;color:#4d554d;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.result-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+.result-actions .btn{padding:10px 14px;font-size:12px;flex:1;justify-content:center;min-width:120px}
+.progress-wrap{display:none;margin-top:14px}
+.progress-wrap.show{display:block}
+.progress-top{display:flex;justify-content:space-between;gap:8px;font-size:10px;color:var(--muted);margin-bottom:6px}
+.progress{height:6px;border-radius:999px;background:var(--line-soft);overflow:hidden}
+.progress i{display:block;height:100%;width:0;background:var(--accent);transition:width .35s ease}
+.rewrite-list{display:flex;flex-direction:column;gap:10px;margin-top:14px;max-height:330px;overflow:auto}
+.rewrite-item{border:1px solid var(--line-soft);border-radius:12px;overflow:hidden;background:#fff}
+.rewrite-item .rw-head{display:flex;justify-content:space-between;gap:8px;padding:8px 11px;background:rgba(242,237,226,.55);font-size:10px;color:var(--muted)}
+.rewrite-item .rw-body{padding:10px 11px;font-size:11px;line-height:1.75}
+.rw-body .orig{color:#8c8f86;border-left:2px solid var(--line);padding-left:8px;margin-bottom:7px}
+.rw-body .new{color:var(--ink);border-left:2px solid var(--sage);padding-left:8px}
+.result-note{font-size:10px;color:var(--muted);line-height:1.7;margin-top:12px}
+
+/* Process */
+.process{background:var(--paper-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.process-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:1px solid var(--line)}
+.step{padding:24px 22px 8px 0;border-right:1px solid var(--line);position:relative}
+.step:last-child{border-right:0;padding-right:0}
+.step .num{font-family:"Noto Serif SC",serif;font-size:34px;line-height:1;color:rgba(198,73,50,.28);margin-bottom:16px}
+.step h3{font-family:"Noto Serif SC",serif;font-size:19px;margin:0 0 6px}
+.step p{font-size:12px;color:var(--muted);line-height:1.8;margin:0;max-width:220px}
+
+/* FAQ */
+.faq-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:48px;align-items:start}
+.faq-intro h2{font-family:"Noto Serif SC",serif;font-size:34px;line-height:1.3;margin:0 0 12px;letter-spacing:-.02em}
+.faq-intro p{font-size:13px;color:var(--muted);line-height:1.85;margin:0 0 18px}
+.faq-intro a{color:var(--accent-dark);text-decoration:none;border-bottom:1px solid rgba(198,73,50,.3)}
+.faq-list{border-top:1px solid var(--line)}
+details{border-bottom:1px solid var(--line);padding:16px 0}
+details summary{cursor:pointer;list-style:none;display:flex;align-items:center;justify-content:space-between;gap:16px;font-size:14px;font-weight:500}
+details summary::-webkit-details-marker{display:none}
+details summary::after{content:"+";font-family:"Noto Serif SC",serif;font-size:20px;color:var(--accent);line-height:1}
+details[open] summary::after{content:"−"}
+details p{font-size:12px;color:var(--muted);line-height:1.85;margin:10px 0 0;max-width:640px}
+
+/* Footer */
+.site-foot{background:var(--ink);color:#f8f5ee;padding:48px 0 30px}
+.foot-grid{display:grid;grid-template-columns:1.2fr .8fr .8fr .8fr;gap:24px;padding-bottom:30px;border-bottom:1px solid rgba(248,245,238,.14)}
+.foot-brand{display:flex;align-items:flex-start;gap:12px}
+.foot-brand .brand-mark{width:34px;height:34px;font-size:18px;box-shadow:none;background:#f8f5ee;color:var(--ink)}
+.foot-brand strong{font-family:"Noto Serif SC",serif;font-size:18px;letter-spacing:.04em}
+.foot-brand p{font-size:11px;color:rgba(248,245,238,.58);line-height:1.8;margin:6px 0 0;max-width:330px}
+.foot-col h4{font-size:10px;letter-spacing:.16em;color:rgba(248,245,238,.5);margin:0 0 10px;font-weight:500}
+.foot-col a,.foot-col span{display:block;font-size:11px;color:rgba(248,245,238,.75);text-decoration:none;line-height:2}
+.foot-col a:hover{color:#fff}
+.foot-bottom{display:flex;justify-content:space-between;gap:16px;padding-top:18px;font-size:10px;color:rgba(248,245,238,.45);line-height:1.7;flex-wrap:wrap}
+.foot-bottom b{color:rgba(248,245,238,.68);font-weight:500}
+
+/* Toast */
+.toast{
+  position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(12px);
+  background:var(--ink);color:#fff;padding:10px 16px;border-radius:999px;font-size:11px;
+  opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;z-index:60;max-width:90vw;
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* Responsive */
+@media (max-width:980px){
+  .hero-grid{grid-template-columns:1fr;gap:38px}
+  .hero h1{font-size:50px}
+  .upload-card{transform:none;max-width:560px}
+  .service-grid{grid-template-columns:1fr 1fr}
+  .service-card.main{grid-column:1/-1;min-height:auto}
+  .pricing-grid,.faq-grid{grid-template-columns:1fr;gap:28px}
+  .work-grid{grid-template-columns:1fr}
+  .process-grid{grid-template-columns:1fr 1fr}
+  .step{padding:24px 22px 24px 0;border-bottom:1px solid var(--line)}
+  .step:nth-child(2){border-right:0}
+  .step:nth-child(3),.step:nth-child(4){border-bottom:0}
+}
+@media (max-width:720px){
+  .wrap{padding:0 18px}
+  .head-row{height:64px;gap:12px}
+  .nav{display:none}
+  .head-cta{padding:9px 14px;font-size:11px}
+  .brand-name strong{font-size:16px}
+  .brand-mark{width:34px;height:34px;font-size:18px}
+  .hero{padding:42px 0 34px}
+  .hero h1{font-size:40px;line-height:1.14}
+  .hero-sub{font-size:15px}
+  .section{padding:54px 0}
+  .section-head{display:block;margin-bottom:26px}
+  .section-head h2{font-size:28px}
+  .section-head p{margin-top:10px}
+  .service-grid{grid-template-columns:1fr}
+  .trust-row{grid-template-columns:1fr 1fr}
+  .trust-item:nth-child(2){border-right:0}
+  .trust-item:nth-child(3),.trust-item:nth-child(4){border-top:1px solid var(--line)}
+  .process-grid{grid-template-columns:1fr}
+  .step{border-right:0;border-bottom:1px solid var(--line);padding:20px 0}
+  .step:last-child{border-bottom:0}
+  .price-table th,.price-table td{padding:12px}
+  .price-table td:last-child{font-size:10px}
+  .price-table td:nth-child(2){font-size:14px}
+  .pay-box{display:block;padding:16px}
+  .pay-head{flex-direction:row;align-items:baseline;gap:10px;padding:0 0 10px;border-right:0;border-bottom:1px solid var(--line-soft);margin-bottom:10px}
+  .editor-head,.result-head{padding:14px 16px}
+  .editor-body,.result-body{padding:14px 16px}
+  #textInput{min-height:260px}
+  .result-empty{min-height:300px}
+  .score-value{font-size:38px}
+  .foot-grid{grid-template-columns:1fr;gap:22px}
+  .foot-bottom{display:block}
+  .foot-bottom div{margin-top:6px}
+  .upload-card{padding:20px}
+}
+@media (prefers-reduced-motion:reduce){
+  *{scroll-behavior:auto!important;transition:none!important}
+}
+</style>
+</head>
+<body>
+
+<header class="site-head">
+  <div class="wrap head-row">
+    <a class="brand" href="index.html" aria-label="巧巧论文工坊首页">
+      <span class="brand-mark" aria-hidden="true">巧</span>
+      <span class="brand-name"><strong>巧巧论文工坊</strong><small>QIAOQIAO PAPER STUDIO</small></span>
+    </a>
+    <nav class="nav" aria-label="主导航">
+      <a href="index.html">首页</a>
+      <a href="paper.html">论文降重</a>
+      <a href="ppt.html">PPT</a>
+      <a href="word.html">Word</a>
+      <a href="excel.html">Excel</a>
+    </nav>
+    <a class="head-cta" href="#workspace">免费初检 →</a>
+  </div>
+  <div class="paper-switch">
+    <div class="wrap paper-switch-row" aria-label="服务快捷导航">
+      <a href="paper.html" class="active">01 论文降重</a>
+      <a href="ppt.html">02 PPT 制作</a>
+      <a href="word.html">03 Word 排版</a>
+      <a href="excel.html">04 Excel 表格</a>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+  <!-- ===== Hero ===== -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <div class="eyebrow"><span class="dot"></span> 论文原创性优化 · 按字计价 · 学生友好</div>
+        <h1 class="serif">论文降重，<br>别靠<em>运气</em>。</h1>
+        <p class="hero-sub">先看一眼前 1200 字的<strong>参考重复度</strong>，再让 AI 把重复、模板化的表达改成你自己的话。整篇论文或单独一段，都可以提交；<strong>AI 初改 + 人工复核</strong>，按字数透明计价。</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#workspace" id="heroUploadBtn">上传论文，免费初检</a>
+          <a class="btn btn-ghost" href="#pricing">查看价格</a>
+        </div>
+        <div class="hero-points">
+          <span><i></i>不代写</span>
+          <span><i></i>不承诺“包过”</span>
+          <span><i></i>文件不留存</span>
+          <span><i></i>参考结果不等同知网/维普</span>
+        </div>
+      </div>
+
+      <div class="upload-card" aria-label="上传论文">
+        <div class="card-top"><span class="tag">FREE CHECK · 免费初检</span><span class="mini-seal" aria-hidden="true">巧</span></div>
+        <h2>把论文放进来</h2>
+        <p class="hint">支持 .docx / .txt，单个文件不超过 5 MB。文件只在你的浏览器里解析，不上传到本站服务器。</p>
+        <label class="dropzone" for="fileInput" id="dropzone">
+          <span class="drop-icon" aria-hidden="true"></span>
+          <strong>拖入论文，或点击选择文件</strong>
+          <small>.docx / .txt · 也可以直接粘贴一段文字</small>
+        </label>
+        <input type="file" id="fileInput" accept=".docx,.txt,.md" hidden>
+        <div class="file-meta"><span id="heroFile">尚未选择文件</span><a href="#workspace" id="pasteLink">粘贴文字 →</a></div>
+        <div class="card-note"><span class="lock" aria-hidden="true">◈</span><span><b>先试再决定。</b> 免费版只改写前 1200 字；完整论文走人工订单，先报价再付款。</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Trust strip ===== -->
+  <section class="trust-strip" aria-label="服务承诺">
+    <div class="wrap trust-row">
+      <div class="trust-item"><span class="num">01</span><strong>按字计价</strong><span>没有隐藏套餐，报价即总价</span></div>
+      <div class="trust-item"><span class="num">02</span><strong>AI + 人工</strong><span>AI 初改，人工复核语句和逻辑</span></div>
+      <div class="trust-item"><span class="num">03</span><strong>不碰代写</strong><span>只优化你已有的内容</span></div>
+      <div class="trust-item"><span class="num">04</span><strong>先看样稿</strong><span>满意再处理全文</span></div>
+    </div>
+  </section>
+
+  <!-- ===== Services ===== -->
+  <section class="section services" id="services">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <p class="kicker">WHAT WE DO · 服务</p>
+          <h2>论文是主项，<br>排版和 PPT 也顺手做。</h2>
+        </div>
+        <p>不接“从零代写”，只接已有内容的优化、排版和表达整理。论文按字数，PPT / Word / Excel 按页或按表报价。</p>
+      </div>
+      <div class="service-grid">
+        <article class="service-card main">
+          <span class="num">01 / MAIN</span>
+          <h3>论文降重与原创性优化</h3>
+          <p>整篇或单段提交。先做站内参考重复度初检，标出高风险段落；AI 改写后，由人工复核专业术语、数据、引用关系和语句逻辑。</p>
+          <div class="service-tags"><span>整篇 / 单段</span><span>AI 初改</span><span>人工复核</span><span>Word 交付</span></div>
+          <a class="service-link" href="#workspace" style="color:#f0b6a6">去上传初检 →</a>
+          <div class="service-price"><b>¥2.9<span style="font-size:11px;color:inherit"> / 千字起</span></b><span>最低 ¥29.9 · 学生 9 折</span></div>
+        </article>
+        <article class="service-card">
+          <span class="num">02 / SIDE</span>
+          <h3><a class="service-link" href="ppt.html" style="font-size:26px;color:inherit;margin:0">PPT 制作</a></h3>
+          <p>开题、答辩、课程汇报、竞赛路演。给提纲和素材，按页做视觉排版；含 2 次修改。</p>
+          <div class="service-tags"><span>答辩 PPT</span><span>课程汇报</span><span>按页计价</span></div>
+          <a class="service-link" href="ppt.html">查看 PPT 服务 →</a>
+          <div class="service-price"><b>¥10<span style="font-size:11px;color:inherit"> / 页起</span></b><span>10 页起</span></div>
+        </article>
+        <article class="service-card">
+          <span class="num">03 / SIDE</span>
+          <h3>Word / Excel</h3>
+          <p>论文格式排版、目录页码、表格清洗、函数与图表。Word 按字数，Excel 按表报价。</p>
+          <div class="service-tags"><span>格式排版</span><span>表格清洗</span><span>函数图表</span></div>
+          <div class="service-links"><a href="word.html">Word 排版 →</a><a href="excel.html">Excel 表格 →</a></div>
+          <div class="service-price"><b>¥30<span style="font-size:11px;color:inherit"> / 千字起</span></b><span>Excel ¥50 / 表起</span></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Pricing ===== -->
+  <section class="section pricing" id="pricing">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <p class="kicker">PRICING · 价格</p>
+          <h2>开业价，<br>比市场价低一点。</h2>
+        </div>
+        <p>市场上 AI 降重多在 ¥3–6/千字，人工改写常见 ¥15–30/千字。我们刚起步，先用 AI + 人工复核把口碑做起来，价格定在中间偏下。</p>
+      </div>
+      <div class="pricing-grid">
+        <div>
+          <div class="price-table">
+            <table>
+              <thead><tr><th>服务</th><th>开业价</th><th>说明</th></tr></thead>
+              <tbody>
+                <tr><td>论文降重<br><span style="font-weight:400;color:var(--muted);font-size:11px">AI 初改 + 人工复核</span></td><td>¥2.9/千字</td><td>最低 ¥29.9；3 万字以上、紧急 24h 另议</td></tr>
+                <tr><td>论文润色 / 引用规范</td><td>¥1.9/千字</td><td>最低 ¥19.9；只改表达，不编造数据</td></tr>
+                <tr><td>PPT 制作</td><td>¥10/页起</td><td>10 页起；含 2 次修改；复杂动画另议</td></tr>
+                <tr><td>Word 排版</td><td>¥30/千字起</td><td>按学校模板、目录、页码、图表编号报价</td></tr>
+                <tr><td>Excel 表格</td><td>¥50/表起</td><td>函数、图表、数据清洗按复杂度另议</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="price-note">
+            <span><i></i>学生凭证 9 折</span>
+            <span><i></i>24h 加急 +30%</span>
+            <span><i></i>先报价，确认后付款</span>
+          </div>
+        </div>
+        <aside class="quote-card">
+          <h3>先算一下要多少钱</h3>
+          <p>输入字数或页数，立刻得到预估价。实际以文件字数和难度确认为准。</p>
+          <div class="field">
+            <label for="serviceSelect">服务类型</label>
+            <select id="serviceSelect">
+              <option value="paper">论文降重（AI + 人工）</option>
+              <option value="polish">论文润色 / 引用规范</option>
+              <option value="ppt">PPT 制作</option>
+              <option value="word">Word 排版</option>
+              <option value="excel">Excel 表格</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="qtyInput" id="qtyLabel">字数（字）</label>
+            <input id="qtyInput" type="number" min="0" step="1" value="5000" inputmode="numeric">
+          </div>
+          <div class="quote-result"><small id="quoteHint">按 5,000 字估算<br>AI 初改 + 人工复核</small><b id="quoteValue">¥29.9</b></div>
+          <button class="btn btn-dark" id="orderBtn" type="button">发送需求到邮箱 →</button>
+          <div class="mini">2818665148@qq.com · 24 小时内回复</div>
+        </aside>
+      </div>
+      <div class="pay-box">
+        <div class="pay-head"><span>PAYMENT · 付款</span><strong>微信 / 支付宝</strong></div>
+        <p>确认报价后，由 <b>2818665148@qq.com</b> 发送收款码或收款单；付款备注“姓名 + 服务”，截图回复后开始处理。<b>网站不公开张贴个人收款码。</b></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Workspace / free check ===== -->
+  <section class="section workspace" id="workspace">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <p class="kicker">TRY IT · 免费初检</p>
+          <h2>先看一眼前 1200 字。</h2>
+        </div>
+        <p>上传 .docx 或粘贴正文。初检会标出站内重复片段和常见模板句；AI 只改写免费额度内的文字。完整论文请走邮箱订单。</p>
+      </div>
+      <div class="work-grid">
+        <div class="editor-card">
+          <div class="editor-head"><strong>论文正文</strong><span id="editorBadge">0 字 · 未开始</span></div>
+          <div class="editor-body">
+            <textarea id="textInput" aria-label="论文正文" placeholder="把论文正文粘贴到这里，或从上方选择一个 .docx / .txt 文件……&#10;&#10;建议一次粘贴摘要 + 引言，或一整段。免费体验最多改写前 1200 字。"></textarea>
+            <div class="editor-foot">
+              <div class="char-count"><b id="charCount">0</b> 字 <span id="sampleHint">· 免费体验 1200 字</span></div>
+              <div class="editor-actions">
+                <button class="btn btn-primary" id="analyzeBtn" type="button">开始初检</button>
+                <button class="btn btn-ghost" id="clearBtn" type="button">清空</button>
+              </div>
+            </div>
+            <div class="notice" id="workspaceNotice">参考初检只比对站内文本重复和常见表达，<b>不是知网、维普、万方的官方查重结果</b>。正式提交前请以学校系统为准。</div>
+          </div>
+        </div>
+
+        <div class="result-card">
+          <div class="result-head"><strong>初检结果</strong><span id="resultBadge">REFERENCE ONLY</span></div>
+          <div class="result-body" id="resultBody">
+            <div class="result-empty">
+              <div class="empty-num serif">01</div>
+              <strong>还没有开始</strong>
+              <p>粘贴一段文字或上传论文，点击“开始初检”。结果会显示参考重复度、风险段落和 AI 改写入口。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Process ===== -->
+  <section class="section process" id="process">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <p class="kicker">HOW IT WORKS · 流程</p>
+          <h2>四步，<br>把重复的表达改掉。</h2>
+        </div>
+        <p>先免费看样稿，再决定要不要处理全文。不预付全款，不满意不往下走。</p>
+      </div>
+      <div class="process-grid">
+        <div class="step"><div class="num serif">01</div><h3>上传 / 粘贴</h3><p>选 .docx 或 .txt，或直接贴一段。浏览器本地解析，先算字数和参考重复度。</p></div>
+        <div class="step"><div class="num serif">02</div><h3>看参考报告</h3><p>标出站内重复、模板句和高风险段落。提醒：这不是官方查重结果。</p></div>
+        <div class="step"><div class="num serif">03</div><h3>AI 初改</h3><p>免费额度内直接改写；全文下单后，按段落处理，保留专业术语和数据。</p></div>
+        <div class="step"><div class="num serif">04</div><h3>人工复核交付</h3><p>人工通读、修正逻辑和引用，1–3 个工作日邮件交付 Word 稿。</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FAQ ===== -->
+  <section class="section" id="faq">
+    <div class="wrap faq-grid">
+      <div class="faq-intro">
+        <p class="kicker">FAQ · 先把丑话说前面</p>
+        <h2>能做什么，<br>不能做什么。</h2>
+        <p>论文服务最怕“承诺过头”。下面这些边界，下单前请先看一遍。还有问题，发邮件到 <a href="mailto:2818665148@qq.com">2818665148@qq.com</a>。</p>
+      </div>
+      <div class="faq-list">
+        <details open>
+          <summary>你们能查出和知网一样的重复率吗？</summary>
+          <p>不能。知网、维普、万方的比对库不向个人网站开放，本站没有官方查重接口。这里做的是“站内文本重复 + 常见模板表达”的参考初检，结果不能替代学校或期刊的正式查重报告。</p>
+        </details>
+        <details>
+          <summary>能保证降到多少、包过吗？</summary>
+          <p>不承诺“包过”，也不承诺具体百分比。我们能做的是在不改变原意、不编造数据的前提下，优化句式、用词和引用表达，降低与常见表达的重合。最终是否通过，取决于学校系统、比对库和论文本身。</p>
+        </details>
+        <details>
+          <summary>整篇论文怎么处理？</summary>
+          <p>先上传或粘贴前 1200 字做免费样稿；确认风格后，把全文发到邮箱，我们按字数报价。确认付款后 1–3 个工作日交付 Word 稿；急单可加急，费用 +30%。</p>
+        </details>
+        <details>
+          <summary>会帮我代写吗？</summary>
+          <p>不代写。只处理你已有的论文、段落、PPT 提纲或表格，不伪造数据、不虚构参考文献、不替你做学术决策。</p>
+        </details>
+        <details>
+          <summary>论文文件安全吗？</summary>
+          <p>网页端的 .docx / .txt 只在你的浏览器里解析，不上传到本站服务器。免费样稿的 AI 改写会把必要段落发送到第三方 AI 接口；正式订单建议通过邮箱提交，并在邮件里说明保密要求。</p>
+        </details>
+        <details>
+          <summary>价格怎么算？</summary>
+          <p>论文按字数：降重 ¥2.9/千字，润色 ¥1.9/千字，均有最低价。PPT ¥10/页起，Word ¥30/千字起，Excel ¥50/表起。学生凭证 9 折，24h 加急 +30%。</p>
+        </details>
+        <details>
+          <summary>怎么付款？</summary>
+          <p>支持微信 / 支付宝。确认报价后，我们会通过 2818665148@qq.com 发送收款码或收款单；付款备注“姓名 + 服务”，截图回复后开始处理。网站不公开张贴个人收款码，避免被他人滥用。</p>
+        </details>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="foot-brand">
+          <span class="brand-mark" aria-hidden="true">巧</span>
+          <div><strong>巧巧论文工坊</strong><p>论文原创性优化 · PPT / Word / Excel。只改已有内容，不代写、不承诺包过。</p></div>
+        </div>
+      </div>
+      <div class="foot-col">
+        <h4>服务</h4>
+        <a href="paper.html">论文降重</a>
+        <a href="ppt.html">PPT 制作</a>
+        <a href="word.html">Word 排版</a>
+        <a href="excel.html">Excel 表格</a>
+      </div>
+      <div class="foot-col">
+        <h4>联系</h4>
+        <a href="mailto:2818665148@qq.com">2818665148@qq.com</a>
+        <span>回复时间：09:00–23:00</span>
+        <span>急单请在邮件标题写“加急”</span>
+      </div>
+      <div class="foot-col">
+        <h4>边界</h4>
+        <span>参考初检 ≠ 官方查重</span>
+        <span>不代写 · 不伪造数据</span>
+        <span>先报价 · 确认后付款</span>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <div>© 2026 巧巧论文工坊 · <b>QIAOQIAO PAPER STUDIO</b></div>
+      <div>服务对象：国内高校学生 · 仅处理用户已拥有的原创内容</div>
+    </div>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+/* ===== 基础工具 ===== */
+const $ = (sel, root = document) => root.querySelector(sel);
+const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
+const EMAIL = '2818665148@qq.com';
+const FREE_LIMIT = 1200;
+const state = {
+  fileName: '',
+  text: '',
+  paragraphs: [],
+  analysis: null,
+  rewrite: [],
+  busy: false
+};
+
+function toast(message){
+  const el = $('#toast');
+  el.textContent = message;
+  el.classList.add('show');
+  clearTimeout(toast._timer);
+  toast._timer = setTimeout(() => el.classList.remove('show'), 2600);
+}
+
+function escapeHtml(str){
+  return String(str).replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+}
+
+function countChars(text){
+  return (text || '').replace(/\s/g, '').length;
+}
+
+function formatNumber(n){
+  return Number(n).toLocaleString('zh-CN');
+}
+
+/* ===== 报价 ===== */
+const SERVICES = {
+  paper: {label:'论文降重（AI + 人工）', unit:'字', rate:2.9, min:29.9, per:1000, hint:'AI 初改 + 人工复核'},
+  polish: {label:'论文润色 / 引用规范', unit:'字', rate:1.9, min:19.9, per:1000, hint:'改表达，不编造数据'},
+  ppt: {label:'PPT 制作', unit:'页', rate:10, min:100, per:1, hint:'10 页起，含 2 次修改'},
+  word: {label:'Word 排版', unit:'字', rate:30, min:30, per:1000, hint:'按模板和复杂度报价'},
+  excel: {label:'Excel 表格', unit:'表', rate:50, min:50, per:1, hint:'函数、图表、清洗另议'}
+};
+
+function currentService(){
+  return SERVICES[$('#serviceSelect').value] || SERVICES.paper;
+}
+
+function calcQuote(){
+  const key = $('#serviceSelect').value;
+  const s = SERVICES[key];
+  const qty = Math.max(0, Number($('#qtyInput').value) || 0);
+  let amount = 0;
+  if (key === 'paper' || key === 'polish' || key === 'word') {
+    amount = qty / 1000 * s.rate;
+  } else {
+    amount = qty * s.rate;
+  }
+  amount = Math.max(s.min, amount);
+  $('#qtyLabel').textContent = key === 'ppt' ? '页数（页）' : (key === 'excel' ? '表格数量（表）' : '字数（字）');
+  $('#qtyInput').placeholder = key === 'ppt' ? '例如 20' : (key === 'excel' ? '例如 1' : '例如 5000');
+  $('#quoteValue').textContent = '¥' + (Math.round(amount * 10) / 10).toFixed(1);
+  $('#quoteHint').innerHTML = `按 ${formatNumber(qty)} ${s.unit}估算<br>${s.hint}`;
+  return { key, s, qty, amount: Math.round(amount * 10) / 10 };
+}
+
+$('#serviceSelect').addEventListener('change', () => {
+  const defaults = {paper:5000, polish:5000, ppt:20, word:5000, excel:1};
+  $('#qtyInput').value = defaults[$('#serviceSelect').value] || 1;
+  calcQuote();
+});
+$('#qtyInput').addEventListener('input', calcQuote);
+
+$('#orderBtn').addEventListener('click', () => {
+  const { key, s, qty, amount } = calcQuote();
+  const subject = `【巧巧论文工坊】${s.label}需求 · ${formatNumber(qty)}${s.unit}`;
+  const body = [
+    '你好，我想咨询/下单：',
+    `服务：${s.label}`,
+    `数量：${formatNumber(qty)}${s.unit}`,
+    `预估价：¥${amount}`,
+    '',
+    '姓名/昵称：',
+    '学校/专业：',
+    '期望交付时间：',
+    '补充说明：',
+    '',
+    '（请把论文/PPT/表格作为附件发回这封邮件；正式报价以文件字数和难度为准。）'
+  ].join('\n');
+  window.location.href = `mailto:${EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  toast('已打开邮件客户端，请把文件作为附件发回。');
+});
+
+/* ===== 字数 ===== */
+function updateCount(){
+  const text = $('#textInput').value;
+  const chars = countChars(text);
+  $('#charCount').textContent = formatNumber(chars);
+  $('#editorBadge').textContent = chars ? `${formatNumber(chars)} 字 · ${chars > FREE_LIMIT ? '超出免费额度' : '可免费初检'}` : '0 字 · 未开始';
+  $('#sampleHint').textContent = chars > FREE_LIMIT ? `· 仅改写前 ${FREE_LIMIT} 字` : '· 免费体验 1200 字';
+}
+$('#textInput').addEventListener('input', updateCount);
+
+/* ===== 文件读取 ===== */
+function setFileMeta(name){
+  state.fileName = name || '';
+  $('#heroFile').textContent = name ? name : '尚未选择文件';
+  $('#heroFile').title = name || '';
+}
+
+async function loadJSZip(){
+  if (window.JSZip) return window.JSZip;
+  const sources = [
+    'https://fastly.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js',
+    'https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js'
+  ];
+  return new Promise((resolve, reject) => {
+    let i = 0;
+    const next = () => {
+      if (i >= sources.length) { reject(new Error('解析组件加载失败，请检查网络后重试')); return; }
+      const s = document.createElement('script');
+      s.src = sources[i++];
+      s.onload = () => resolve(window.JSZip);
+      s.onerror = () => { s.remove(); next(); };
+      document.head.appendChild(s);
+    };
+    next();
+  });
+}
+
+async function extractDocx(file){
+  const JSZip = await loadJSZip();
+  const zip = await JSZip.loadAsync(await file.arrayBuffer());
+  const docFile = zip.file('word/document.xml');
+  if (!docFile) throw new Error('这个 .docx 里没有找到正文，请另存为新的 Word 文件再试');
+  const xml = await docFile.async('string');
+  const doc = new DOMParser().parseFromString(xml, 'application/xml');
+  if (doc.getElementsByTagName('parsererror').length) throw new Error('Word 文件解析失败');
+  const ns = 'http://schemas.openxmlformats.org/wordprocessingml/2006/main';
+  const paras = Array.from(doc.getElementsByTagNameNS(ns, 'p'));
+  const lines = paras.map(p => {
+    let out = '';
+    Array.from(p.getElementsByTagName('*')).forEach(node => {
+      if (node.localName === 't') out += node.textContent;
+      else if (node.localName === 'tab') out += '\t';
+      else if (node.localName === 'br') out += '\n';
+    });
+    return out.replace(/\u00a0/g, ' ').trim();
+  }).filter(Boolean);
+  return lines.join('\n\n');
+}
+
+async function readFile(file){
+  if (!file) return;
+  if (file.size > 5 * 1024 * 1024) {
+    toast('文件超过 5 MB，请压缩或只上传正文部分。');
+    return;
+  }
+  const ext = (file.name.split('.').pop() || '').toLowerCase();
+  if (ext === 'pdf') {
+    toast('PDF 请先用 Word 打开，另存为 .docx 再上传。');
+    return;
+  }
+  if (ext === 'doc') {
+    toast('旧版 .doc 不支持，请在 Word 里另存为 .docx。');
+    return;
+  }
+  if (!['docx', 'txt', 'md'].includes(ext)) {
+    toast('目前支持 .docx / .txt / .md。');
+    return;
+  }
+  setFileMeta(file.name);
+  $('#workspaceNotice').classList.remove('warn');
+  $('#workspaceNotice').innerHTML = '正在读取文件…';
+  try {
+    const text = ext === 'docx' ? await extractDocx(file) : await file.text();
+    const clean = text.replace(/\r/g, '').trim();
+    if (!clean) throw new Error('没有读到文字，请确认文件里是可选中的正文');
+    $('#textInput').value = clean;
+    updateCount();
+    $('#workspaceNotice').innerHTML = `已读取 <b>${escapeHtml(file.name)}</b>，共 ${formatNumber(countChars(clean))} 字。点击“开始初检”查看参考重复度。`;
+    document.getElementById('workspace').scrollIntoView({behavior:'smooth', block:'start'});
+  } catch (err) {
+    $('#workspaceNotice').classList.add('warn');
+    $('#workspaceNotice').textContent = '读取失败：' + (err.message || '未知错误');
+    toast('读取失败，请换一个文件试试。');
+  }
+}
+
+$('#fileInput').addEventListener('change', e => readFile(e.target.files[0]));
+
+const dropzone = $('#dropzone');
+['dragenter','dragover'].forEach(evt => dropzone.addEventListener(evt, e => {
+  e.preventDefault(); dropzone.classList.add('drag');
+}));
+['dragleave','drop'].forEach(evt => dropzone.addEventListener(evt, e => {
+  e.preventDefault(); dropzone.classList.remove('drag');
+}));
+dropzone.addEventListener('drop', e => {
+  const file = e.dataTransfer.files && e.dataTransfer.files[0];
+  if (file) readFile(file);
+});
+
+$('#pasteLink').addEventListener('click', e => {
+  e.preventDefault();
+  $('#workspace').scrollIntoView({behavior:'smooth', block:'start'});
+  setTimeout(() => $('#textInput').focus(), 450);
+});
+
+/* ===== 初检 ===== */
+const COMMON_PHRASES = [
+  '随着社会经济的快速发展','近年来','综上所述','本文主要研究','具有重要的理论意义和实践意义',
+  '在当今社会','众所周知','不可否认','在很大程度上','起到了至关重要的作用','本文认为',
+  '值得注意的是','一方面','另一方面','不仅如此','从某种意义上说','为相关研究提供了参考'
+];
+
+function splitParagraphs(text){
+  let parts = text.split(/\n+/).map(s => s.replace(/\s+/g, ' ').trim()).filter(s => s.length > 1);
+  if (parts.length < 3) {
+    parts = text.split(/(?<=[。！？!?])\s*/).map(s => s.trim()).filter(s => s.length > 6);
+    const merged = [];
+    let buffer = '';
+    parts.forEach(p => {
+      if ((buffer + p).length > 420 && buffer) { merged.push(buffer); buffer = p; }
+      else buffer += p;
+    });
+    if (buffer) merged.push(buffer);
+    parts = merged.length ? merged : [text];
+  }
+  return parts;
+}
+
+function charGrams(str, n = 8){
+  const clean = str.replace(/[\s，。！？；：、“”‘’（）()《》〈〉·,.\-—…、]/g, '');
+  const grams = [];
+  for (let i = 0; i <= clean.length - n; i++) grams.push(clean.slice(i, i + n));
+  return grams;
+}
+
+function analyzeText(text){
+  const paragraphs = splitParagraphs(text);
+  const gramsByPara = paragraphs.map(p => charGrams(p, 8));
+  const global = new Map();
+  gramsByPara.forEach(grams => grams.forEach(g => global.set(g, (global.get(g) || 0) + 1)));
+  const sentenceCount = new Map();
+  paragraphs.forEach(p => {
+    const sentences = p.split(/(?<=[。！？!?])\s*/).map(s => s.trim()).filter(s => s.length > 8);
+    sentences.forEach(s => sentenceCount.set(s, (sentenceCount.get(s) || 0) + 1));
+  });
+  const rows = paragraphs.map((p, i) => {
+    const grams = gramsByPara[i];
+    const total = grams.length || 1;
+    const repeated = grams.filter(g => (global.get(g) || 0) > 1).length;
+    const commonHits = COMMON_PHRASES.filter(c => p.includes(c)).length;
+    const duplicateSentence = p.split(/(?<=[。！？!?])\s*/).some(s => (sentenceCount.get(s.trim()) || 0) > 1);
+    const risk = Math.min(.55, (repeated / total) * .72 + commonHits * .025 + (duplicateSentence ? .15 : 0));
+    return {
+      index: i,
+      text: p,
+      chars: countChars(p),
+      risk,
+      grams: total,
+      repeated,
+      commonHits
+    };
+  });
+  const totalChars = rows.reduce((n, r) => n + r.chars, 0) || 1;
+  const weighted = rows.reduce((n, r) => n + r.risk * r.chars, 0) / totalChars;
+  const score = Math.max(0, Math.min(45, Math.round(weighted * 100)));
+  const flagged = rows.filter(r => r.risk >= .12 || r.commonHits > 0).sort((a, b) => b.risk - a.risk);
+  return { paragraphs, rows, score, flagged, totalChars };
+}
+
+function renderAnalysis(result){
+  state.analysis = result;
+  state.rewrite = [];
+  const score = result.score;
+  const flagged = result.flagged.slice(0, 6);
+  const label = score >= 35 ? '偏高' : (score >= 18 ? '中等' : '较低');
+  const riskHtml = flagged.length ? flagged.map((r, i) => `
+    <div class="risk-item">
+      <div class="risk-top"><span class="risk-label">段落 ${String(r.index + 1).padStart(2, '0')} · ${formatNumber(r.chars)} 字</span><span class="risk-value">${Math.round(r.risk * 100)}% 参考</span></div>
+      <p>${escapeHtml(r.text.slice(0, 120))}${r.text.length > 120 ? '…' : ''}</p>
+    </div>`).join('') : `<div class="risk-item"><p>没有发现明显的高风险段落。仍建议正式提交前用学校系统复核。</p></div>`;
+  $('#resultBody').innerHTML = `
+    <div class="score-box">
+      <div class="score-value">${score}<small>%</small></div>
+      <div class="score-meta"><b>参考重复度 · ${label}</b>站内文本 + 常见表达<br>不等同官方查重</div>
+    </div>
+    <div class="bar"><i id="scoreBar"></i></div>
+    <div class="score-caption">共 ${formatNumber(result.totalChars)} 字，${result.rows.length} 个段落。分数越高，说明站内重复片段或模板句越集中；只作为修改优先级参考。</div>
+    <div class="risk-title"><span>建议优先改的段落</span><b>${flagged.length} 段</b></div>
+    <div class="risk-list">${riskHtml}</div>
+    <div class="result-actions">
+      <button class="btn btn-primary" id="rewriteBtn" type="button">AI 改写免费额度</button>
+      <button class="btn btn-ghost" id="downloadRawBtn" type="button">下载原文 .txt</button>
+    </div>
+    <div class="progress-wrap" id="progressWrap">
+      <div class="progress-top"><span id="progressText">准备中…</span><span id="progressCount">0 / 0</span></div>
+      <div class="progress"><i id="progressBar"></i></div>
+    </div>
+    <div class="rewrite-list" id="rewriteList"></div>
+    <div class="result-note">${result.totalChars > FREE_LIMIT ? `免费体验只改写前 ${FREE_LIMIT} 字；完整稿请点上方“发送需求到邮箱”。` : '本次文本在免费额度内，可直接查看改写结果。'}</div>
+  `;
+  $('#scoreBar').style.width = Math.min(100, score * 1.6) + '%';
+  $('#rewriteBtn').addEventListener('click', startRewrite);
+  $('#downloadRawBtn').addEventListener('click', () => downloadText(state.text, '巧巧论文工坊-原文.txt'));
+  $('#resultBadge').textContent = 'REFERENCE ONLY';
+  document.getElementById('resultBody').scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+$('#analyzeBtn').addEventListener('click', () => {
+  const text = $('#textInput').value.trim();
+  if (countChars(text) < 60) {
+    toast('至少粘贴 60 字，才能看出重复情况。');
+    $('#textInput').focus();
+    return;
+  }
+  state.text = text;
+  $('#analyzeBtn').disabled = true;
+  $('#analyzeBtn').textContent = '初检中…';
+  setTimeout(() => {
+    try {
+      const result = analyzeText(text);
+      renderAnalysis(result);
+      toast(`初检完成：参考重复度 ${result.score}%`);
+    } catch (err) {
+      toast('初检失败：' + (err.message || '请重试'));
+    } finally {
+      $('#analyzeBtn').disabled = false;
+      $('#analyzeBtn').textContent = '重新初检';
+    }
+  }, 60);
+});
+
+$('#clearBtn').addEventListener('click', () => {
+  $('#textInput').value = '';
+  $('#fileInput').value = '';
+  setFileMeta('');
+  updateCount();
+  state.text = '';
+  state.analysis = null;
+  state.rewrite = [];
+  $('#resultBody').innerHTML = `<div class="result-empty"><div class="empty-num serif">01</div><strong>还没有开始</strong><p>粘贴一段文字或上传论文，点击“开始初检”。结果会显示参考重复度、风险段落和 AI 改写入口。</p></div>`;
+  $('#resultBadge').textContent = 'REFERENCE ONLY';
+  $('#workspaceNotice').classList.remove('warn');
+  $('#workspaceNotice').innerHTML = '参考初检只比对站内文本重复和常见表达，<b>不是知网、维普、万方的官方查重结果</b>。正式提交前请以学校系统为准。';
+  toast('已清空。');
+});
+
+/* ===== AI 改写 ===== */
+function chooseRewriteParagraphs(){
+  const rows = state.analysis.rows;
+  if (state.analysis.totalChars <= FREE_LIMIT) {
+    return rows.map(r => r.index);
+  }
+  const selected = [];
+  let used = 0;
+  const priority = [...state.analysis.flagged.map(r => r.index), ...rows.map(r => r.index)];
+  const seen = new Set();
+  for (const idx of priority) {
+    if (seen.has(idx)) continue;
+    seen.add(idx);
+    const r = rows[idx];
+    if (!r) continue;
+    if (used + r.chars > FREE_LIMIT && selected.length) continue;
+    selected.push(idx);
+    used += r.chars;
+    if (used >= FREE_LIMIT) break;
+  }
+  return selected;
+}
+
+const AI_ENDPOINT = 'https://api.apiaifree.com/v1/chat/completions';
+const AI_MODEL = 'free-ai';
+
+async function callAI(messages, maxTokens = 3500){
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 55000);
+  try {
+    const res = await fetch(AI_ENDPOINT, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        model: AI_MODEL,
+        messages,
+        temperature: 0.35,
+        max_tokens: maxTokens
+      }),
+      signal: controller.signal
+    });
+    if (!res.ok) throw new Error('AI 接口返回 ' + res.status);
+    const data = await res.json();
+    const content = data && data.choices && data.choices[0] && data.choices[0].message
+      ? data.choices[0].message.content
+      : '';
+    if (!content) throw new Error('AI 返回为空');
+    return content;
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+function localRewrite(text){
+  const map = [
+    ['随着社会经济的快速发展', '在社会经济持续发展的背景下'],
+    ['近年来', '近些年来'],
+    ['本文主要研究', '本研究聚焦于'],
+    ['具有重要的理论意义和实践意义', '在理论与实践层面均具有一定价值'],
+    ['本文认为', '研究认为'],
+    ['综上所述', '总体来看'],
+    ['在当今社会', '在当前社会环境中'],
+    ['不可否认', '难以否认'],
+    ['在很大程度上', '在较大程度上'],
+    ['起到了至关重要的作用', '发挥了关键作用'],
+    ['为相关研究提供了参考', '可为后续研究提供参照'],
+    ['值得注意的是', '需要留意的是'],
+    ['一方面', '从一方面看'],
+    ['另一方面', '从另一方面看'],
+    ['众所周知', '大家普遍了解'],
+    ['与此同时', '在同一时期'],
+    ['因此', '据此'],
+    ['然而', '不过']
+  ];
+  let out = text;
+  map.forEach(([from, to]) => { out = out.split(from).join(to); });
+  out = out.replace(/；；/g, '；').replace(/，，/g, '，').replace(/\s+/g, ' ').trim();
+  if (out === text) out = '从已有研究来看，' + text.replace(/^本文/, '本研究');
+  return out;
+}
+
+function parseRewriteArray(raw, count){
+  let cleaned = String(raw).trim()
+    .replace(/^```(?:json)?\s*/i, '')
+    .replace(/\s*```$/i, '')
+    .trim();
+  let arr = null;
+  try { arr = JSON.parse(cleaned); } catch (e) {
+    const start = cleaned.indexOf('[');
+    const end = cleaned.lastIndexOf(']');
+    if (start >= 0 && end > start) {
+      try { arr = JSON.parse(cleaned.slice(start, end + 1)); } catch (e2) { arr = null; }
+    }
+  }
+  if (!Array.isArray(arr)) throw new Error('AI 返回格式无法解析');
+  const map = new Map();
+  arr.forEach((item, i) => {
+    if (!item) return;
+    const idx = Number(item.i ?? item.index ?? i);
+    const text = String(item.text ?? item.content ?? item.rewritten ?? '').trim();
+    if (text) map.set(idx, text);
+  });
+  return Array.from({length: count}, (_, i) => map.get(i) || '');
+}
+
+async function rewriteBatch(indexes){
+  const items = indexes.map((idx, i) => {
+    const row = state.analysis.rows[idx];
+    return {i, index: idx, original: row.text, clipped: row.text.slice(0, 620)};
+  });
+  const prompt = `你是严谨的中文论文编辑。请逐段改写下面的论文文字，要求：
+1. 保持原意，不删减关键信息，不编造数据，不改变引用关系；
+2. 调整句式和用词，减少模板化、重复的表达；
+3. 保持学术、书面、通顺，专业术语可以保留；
+4. 只输出严格 JSON 数组，格式为 [{"i":0,"text":"改写后的段落"}]，不要代码块，不要解释，不要输出 JSON 以外的任何字符。
+
+待改段落：
+${items.map(it => `[${it.i}] ${it.clipped}`).join('\n\n')}`;
+  let raw = '';
+  try {
+    raw = await callAI([
+      {role:'system', content:'你是中文论文编辑。严格按要求输出 JSON 数组，不添加解释。'},
+      {role:'user', content:prompt}
+    ], 3500);
+  } catch (err) {
+    await new Promise(r => setTimeout(r, 1200));
+    raw = await callAI([
+      {role:'system', content:'你是中文论文编辑。只输出 JSON 数组。'},
+      {role:'user', content:prompt + '\n\n再次强调：只输出 JSON 数组，不要 markdown 代码块。'}
+    ], 3500);
+  }
+  const parsed = parseRewriteArray(raw, items.length);
+  return items.map((it, i) => ({
+    index: it.index,
+    original: it.original,
+    rewritten: parsed[i] || localRewrite(it.original),
+    fallback: !parsed[i],
+    error: ''
+  }));
+}
+
+async function startRewrite(){
+  if (state.busy || !state.analysis) return;
+  const indexes = chooseRewriteParagraphs();
+  if (!indexes.length) { toast('没有可改写的段落。'); return; }
+  state.busy = true;
+  state.rewrite = [];
+  const btn = $('#rewriteBtn');
+  btn.disabled = true;
+  btn.textContent = 'AI 改写中…';
+  const wrap = $('#progressWrap');
+  wrap.classList.add('show');
+  const list = $('#rewriteList');
+  list.innerHTML = '';
+  $$('.result-actions.dynamic').forEach(el => el.remove());
+  $('#progressText').textContent = '正在连接 AI，逐段改写…';
+  $('#progressCount').textContent = `0 / ${indexes.length}`;
+  $('#progressBar').style.width = '35%';
+  let items = [];
+  let usedFallback = false;
+  try {
+    items = await rewriteBatch(indexes);
+    usedFallback = items.some(it => it.fallback);
+  } catch (err) {
+    usedFallback = true;
+    items = indexes.map(idx => {
+      const row = state.analysis.rows[idx];
+      return {index: idx, original: row.text, rewritten: localRewrite(row.text), fallback: true, error: ''};
+    });
+    toast('AI 接口繁忙，本次先用本地规则做保底改写。');
+  }
+  state.rewrite = items;
+  $('#progressBar').style.width = '100%';
+  $('#progressCount').textContent = `${items.length} / ${indexes.length}`;
+  items.forEach(item => {
+    const row = state.analysis.rows[item.index];
+    const card = document.createElement('div');
+    card.className = 'rewrite-item';
+    card.innerHTML = `
+      <div class="rw-head"><span>段落 ${String(item.index + 1).padStart(2, '0')}</span><span>${item.fallback ? '本地规则初改' : 'AI 初改'}</span></div>
+      <div class="rw-body"><div class="orig">${escapeHtml(row.text.slice(0, 160))}${row.text.length > 160 ? '…' : ''}</div><div class="new">${escapeHtml(item.rewritten.slice(0, 240))}${item.rewritten.length > 240 ? '…' : ''}</div></div>`;
+    list.appendChild(card);
+  });
+  $('#progressText').textContent = usedFallback ? '完成，部分段落使用本地规则保底' : '改写完成';
+  btn.disabled = false;
+  btn.textContent = '重新改写';
+  state.busy = false;
+  const actions = document.createElement('div');
+  actions.className = 'result-actions dynamic';
+  actions.style.marginTop = '12px';
+  actions.innerHTML = `<button class="btn btn-primary" id="downloadDocxBtn" type="button">下载优化样稿 .docx</button><button class="btn btn-ghost" id="copyRewriteBtn" type="button">复制改写结果</button>`;
+  list.parentElement.insertBefore(actions, list.nextSibling);
+  $('#downloadDocxBtn').addEventListener('click', downloadDocx);
+  $('#copyRewriteBtn').addEventListener('click', () => {
+    const text = state.rewrite.filter(r => r.rewritten).map(r => r.rewritten).join('\n\n');
+    copyText(text || '没有可复制的改写内容');
+  });
+  toast(usedFallback ? '改写完成，部分段落使用了本地保底规则。' : 'AI 改写完成，可以下载样稿。');
+}
+
+/* ===== 下载 ===== */
+function downloadText(text, filename){
+  const blob = new Blob([text], {type:'text/plain;charset=utf-8'});
+  downloadBlob(blob, filename);
+}
+
+function downloadBlob(blob, filename){
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = filename;
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1500);
+}
+
+function xmlEscape(str){
+  return String(str).replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+}
+
+function wordParagraph(text, opts = {}){
+  const rpr = (opts.bold || opts.size)
+    ? `<w:rPr>${opts.bold ? '<w:b/>' : ''}${opts.size ? `<w:sz w:val="${opts.size}"/>` : ''}</w:rPr>`
+    : '';
+  return `<w:p><w:r>${rpr}<w:t xml:space="preserve">${xmlEscape(text)}</w:t></w:r></w:p>`;
+}
+
+async function downloadDocx(){
+  try {
+    const JSZip = await loadJSZip();
+    const zip = new JSZip();
+    const title = '巧巧论文工坊 · AI 优化样稿';
+    const subtitle = '本稿为 AI 辅助初改，正式提交前请人工复核术语、数据与引用。';
+    const body = [];
+    body.push(wordParagraph(title, {bold:true, size:'32'}));
+    body.push(wordParagraph(subtitle, {size:'18'}));
+    body.push(wordParagraph(''));
+    state.rewrite.forEach((r, i) => {
+      body.push(wordParagraph(`段落 ${String(r.index + 1).padStart(2, '0')} · 原文`, {bold:true, size:'20'}));
+      body.push(wordParagraph(r.original));
+      body.push(wordParagraph(''));
+      body.push(wordParagraph('改写后', {bold:true, size:'20'}));
+      body.push(wordParagraph(r.error ? `（AI 改写失败，保留原文：${r.error}）` : r.rewritten));
+      body.push(wordParagraph(''));
+    });
+    body.push(wordParagraph('说明：参考初检不是知网/维普/万方官方查重；完整论文服务请联系 2818665148@qq.com。', {size:'18'}));
+    const documentXml = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:body>${body.join('')}<w:sectPr><w:pgSz w:w="11906" w:h="16838"/><w:pgMar w:top="1440" w:right="1440" w:bottom="1440" w:left="1440"/></w:sectPr></w:body></w:document>`;
+    const contentTypes = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">
+<Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/>
+<Default Extension="xml" ContentType="application/xml"/>
+<Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/>
+</Types>`;
+    const rootRels = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/></Relationships>`;
+    zip.file('[Content_Types].xml', contentTypes);
+    zip.file('_rels/.rels', rootRels);
+    zip.file('word/document.xml', documentXml);
+    const blob = await zip.generateAsync({type:'blob', mimeType:'application/vnd.openxmlformats-officedocument.wordprocessingml.document'});
+    downloadBlob(blob, '巧巧论文工坊-AI优化样稿.docx');
+    toast('Word 样稿已生成，请下载查看。');
+  } catch (err) {
+    toast('生成 Word 失败：' + (err.message || '请重试'));
+  }
+}
+
+async function copyText(text){
+  try {
+    await navigator.clipboard.writeText(text);
+    toast('已复制到剪贴板。');
+  } catch (err) {
+    const ta = document.createElement('textarea');
+    ta.value = text; document.body.appendChild(ta); ta.select();
+    try { document.execCommand('copy'); toast('已复制到剪贴板。'); }
+    catch (e) { toast('复制失败，请手动选择文字。'); }
+    ta.remove();
+  }
+}
+
+/* ===== 初始化 ===== */
+calcQuote();
+updateCount();
+$('#heroUploadBtn').addEventListener('click', e => {
+  e.preventDefault();
+  document.getElementById('workspace').scrollIntoView({behavior:'smooth', block:'start'});
+  setTimeout(() => $('#fileInput').click(), 450);
+});
+
+/* 页面滚动时给 header 一点阴影 */
+window.addEventListener('scroll', () => {
+  document.querySelector('.site-head').style.boxShadow = window.scrollY > 20 ? '0 10px 30px rgba(40,33,24,.06)' : 'none';
+}, {passive:true});
+</script>
+</body>
+</html>
