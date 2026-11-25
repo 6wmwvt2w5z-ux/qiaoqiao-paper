@@ -1,2 +1,17 @@
-# kitchen-school
-Kitchen School static site
+# 巧巧论文工坊
+
+面向国内大学生的论文原创性优化网站。主做论文降重 / 润色，副业接 PPT、Word、Excel 排版。
+
+- 正式站：https://6wmwvt2w5z-ux.github.io/qiaoqiao-paper/
+- 联系邮箱：2818665148@qq.com
+- 论文降重：¥2.9/千字，最低 ¥29.9
+- 论文润色：¥1.9/千字
+- PPT：¥10/页起
+- Word：¥30/千字起
+- Excel：¥50/表起
+
+说明：站内“参考重复度”只比对站内重复片段和常见模板表达，不是知网/维普/万方官方查重结果；不代写，不承诺“包过”。
+
+## 技术说明
+
+单文件静态站，入口为 `index.html`，由 GitHub Pages 从 `main` 分支根目录发布。`.docx` 在浏览器端用 JSZip 解析；AI 初改调用第三方免费接口，接口繁忙时使用本地规则保底。
