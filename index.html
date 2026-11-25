@@ -209,6 +209,15 @@ button:disabled{cursor:not-allowed;opacity:.55}
 .price-note{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:14px;font-size:11px;color:var(--muted)}
 .price-note span{display:inline-flex;align-items:center;gap:6px}
 .price-note i{width:5px;height:5px;background:var(--gold);border-radius:50%}
+.pay-box{
+  display:flex;align-items:center;gap:22px;margin-top:22px;padding:18px 22px;
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+}
+.pay-head{flex:0 0 auto;display:flex;flex-direction:column;gap:4px;padding-right:22px;border-right:1px solid var(--line-soft)}
+.pay-head span{font-size:10px;letter-spacing:.16em;color:var(--accent);font-weight:600}
+.pay-head strong{font-family:"Noto Serif SC",serif;font-size:19px;letter-spacing:.02em}
+.pay-box p{margin:0;font-size:12px;line-height:1.85;color:var(--muted)}
+.pay-box b{color:var(--ink);font-weight:600}
 
 .quote-card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:26px;box-shadow:var(--shadow)}
 .quote-card h3{font-family:"Noto Serif SC",serif;font-size:22px;margin:0 0 6px;letter-spacing:-.02em}
@@ -371,6 +380,8 @@ details p{font-size:12px;color:var(--muted);line-height:1.85;margin:10px 0 0;max
   .price-table th,.price-table td{padding:12px}
   .price-table td:last-child{font-size:10px}
   .price-table td:nth-child(2){font-size:14px}
+  .pay-box{display:block;padding:16px}
+  .pay-head{flex-direction:row;align-items:baseline;gap:10px;padding:0 0 10px;border-right:0;border-bottom:1px solid var(--line-soft);margin-bottom:10px}
   .editor-head,.result-head{padding:14px 16px}
   .editor-body,.result-body{padding:14px 16px}
   #textInput{min-height:260px}
@@ -539,6 +550,10 @@ details p{font-size:12px;color:var(--muted);line-height:1.85;margin:10px 0 0;max
           <div class="mini">2818665148@qq.com · 24 小时内回复</div>
         </aside>
       </div>
+      <div class="pay-box">
+        <div class="pay-head"><span>PAYMENT · 付款</span><strong>微信 / 支付宝</strong></div>
+        <p>确认报价后，由 <b>2818665148@qq.com</b> 发送收款码或收款单；付款备注“姓名 + 服务”，截图回复后开始处理。<b>网站不公开张贴个人收款码。</b></p>
+      </div>
     </div>
   </section>
 
@@ -633,6 +648,10 @@ details p{font-size:12px;color:var(--muted);line-height:1.85;margin:10px 0 0;max
         <details>
           <summary>价格怎么算？</summary>
           <p>论文按字数：降重 ¥2.9/千字，润色 ¥1.9/千字，均有最低价。PPT ¥10/页起，Word ¥30/千字起，Excel ¥50/表起。学生凭证 9 折，24h 加急 +30%。</p>
+        </details>
+        <details>
+          <summary>怎么付款？</summary>
+          <p>支持微信 / 支付宝。确认报价后，我们会通过 2818665148@qq.com 发送收款码或收款单；付款备注“姓名 + 服务”，截图回复后开始处理。网站不公开张贴个人收款码，避免被他人滥用。</p>
         </details>
       </div>
     </div>
